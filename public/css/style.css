@@ -1,0 +1,30 @@
+body {
+	padding-top: 75px;
+	padding-bottom: 20px;
+}
+.carousel-inner > .item > img {
+    margin: 0 auto;
+}
+.carousel-caption.caption-btn
+{
+    padding: 0px;
+    left: auto;
+    right: 20px;
+}
+.counting
+{
+    position: absolute; 
+    z-index:100; 
+    text-align: center; 
+    margin-top: 75px; 
+    right: 0; 
+    left: 0; 
+    font-size: 140px; 
+    color: white;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+    display: none;
+}
