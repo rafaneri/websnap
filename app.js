@@ -55,14 +55,16 @@ app.takeSnapshot = function(){
 				clearInterval(interval);
 				
 				var date = new Date();
-				var filename = __dirname + '/public/snap/gdg_snapshot_' + date.toISOString() + '_' + (app.snap++) + '.jpg';
+				var name = 'gdg_snapshot_' + date.toISOString() + '_' + (app.snap++) + '.jpg';
+				var filename = __dirname + '/public/snap/' + name;
 				
 				app.sensors.camera.takeSnapshot(filename, function(err){
 					if(!err) {
 						
 						app.io.broadcast('image', {status: 'OK'});
+						app.io.broadcast('displayImage', {path: name});
 
-						facebook(filename, '#IoT #GDGSSA #IntelGalileo #SENAICIMATEC #JoinIoT #IntelMaker #SoftwareSENAI');
+						//facebook(filename, '#IoT #GDGSSA #IntelGalileo #SENAICIMATEC #JoinIoT #IntelMaker #SoftwareSENAI');
 
 						app.sensors.camera.stopStreamerServer(function(err){
 							if(err) {
@@ -74,13 +76,13 @@ app.takeSnapshot = function(){
 						setTimeout(function(){
 							app.managerPanelMessage('FEITO!', '');
 							setTimeout(function(){
-								app.managerPanelMessage('VAMOS FAZER', 'UMA SELF?');
+								app.managerPanelMessage('VAMOS FAZER', 'UMA SELFIE?');
 								app.isprocessing = false;
 							}, 3000);
 						}, 1500);
 					} else {
 						console.log('facebook error :(');
-						app.managerPanelMessage('VAMOS FAZER', 'UMA SELF?');
+						app.managerPanelMessage('VAMOS FAZER', 'UMA SELFIE?');
 						app.isprocessing = false;
 					}
 				});
@@ -114,7 +116,7 @@ app.openStream = function() {
 			app.managerPanelMessage('NADA DE FOTO...', '');
 
 			setTimeout(function(){
-				app.managerPanelMessage('VAMOS FAZER', 'UMA SELF?');
+				app.managerPanelMessage('VAMOS FAZER', 'UMA SELFIE?');
 				app.isWaitingPhoto = false;
 			}, 2000);
 
@@ -136,9 +138,9 @@ Cylon.robot({
     galileo: { adaptor: 'intel-iot' }
   },
   devices: {
-  	display: {driver: 'upm-jhd1313m1'},
-  	buzzer: {driver: 'direct-pin', pin: 3},
-  	button: {driver: 'button', pin: 2}
+  	display: {driver: 'upm-jhd1313m1'}, // I2C
+  	buzzer: {driver: 'direct-pin', pin: 3}, // D3
+  	button: {driver: 'button', pin: 2} // D2
   },
   work: function(robot) {
   	app.snap = 0;
@@ -150,7 +152,7 @@ Cylon.robot({
     };
 
     app.use('/snapshot', routes);
-    app.managerPanelMessage('VAMOS FAZER', 'UMA SELF?');
+    app.managerPanelMessage('VAMOS FAZER', 'UMA SELFIE?');
 
     app.sensors.button.on('release', function() {
     	app.checkAction();
