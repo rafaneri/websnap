@@ -12,4 +12,10 @@ angular.module('appIoTSelf', ['ngRoute', 'appIoTSelf.service'])
     $scope.init = function() {
     }
 
-});
+})
+.controller('IoTSnapController', function($scope, IoTSelfService){
+
+    $scope.init = function() {
+    }
+
+})
